@@ -5,10 +5,10 @@ RUN corepack enable && corepack install -g yarn@4.9.4
 WORKDIR /app
 
 COPY .yarnrc.yml package.json yarn.lock
+COPY . .
 
 RUN yarn install
 
-COPY . .
 
 EXPOSE 5173
 

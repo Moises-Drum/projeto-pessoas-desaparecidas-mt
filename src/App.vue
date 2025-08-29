@@ -1,19 +1,21 @@
 <template>
-    <h1 class="font-bold text-2xl">You did it!</h1>
-
-    <p>
-        Visit
-        <a
-            href="https://vuejs.org/"
-            target="_blank"
-            rel="noopener"
-        >
-            vuejs.org
-        </a>
-        to read the documentation
-    </p>
+    <router-view />
 </template>
 
-<script setup></script>
+<script setup>
+defineOptions({
+    name: 'App',
+})
+</script>
 
-<style scoped></style>
+<style lang="scss">
+#app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100dvw;
+    height: 100dvh;
+
+    font-family: 'Inter';
+}
+</style>
