@@ -10,6 +10,8 @@
             :class="styleProps"
             type="text"
             :placeholder="placeholder"
+            :value="modelValue"
+            @input="$emit('update:modelValue', $event.target.value)"
         />
     </div>
 </template>
@@ -23,6 +25,8 @@ defineOptions({
 })
 
 const props = defineProps({
+    modelValue: String,
+
     placeholder: String,
 
     width: {
@@ -52,6 +56,8 @@ const props = defineProps({
         default: 'left-3',
     },
 })
+
+const emits = defineEmits(['update:modelValue'])
 
 const styleProps = computed(() => {
     if (props.customStyle) {
