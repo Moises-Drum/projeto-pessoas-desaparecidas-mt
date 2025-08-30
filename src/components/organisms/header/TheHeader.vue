@@ -1,5 +1,8 @@
 <template>
-    <header class="fixed top-0 z-50 w-[100%] flex justify-center items-center bg-white shadow">
+    <header
+        class="fixed top-0 z-50 w-[100%] flex justify-center items-center bg-white shadow"
+        role="banner"
+    >
         <section class="max-w-[1216px] w-[100%]">
             <div class="flex items-center gap-2 py-2 px-4 xl:px-0">
                 <police-logo

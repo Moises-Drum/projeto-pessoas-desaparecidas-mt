@@ -1,7 +1,10 @@
 <template>
     <the-header />
 
-    <main class="w-[100%] mt-[5rem]">
+    <main
+        class="w-[100%] flex-1 flex justify-center mt-[5rem]"
+        role="main"
+    >
         <slot></slot>
     </main>
 
