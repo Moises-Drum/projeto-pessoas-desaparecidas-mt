@@ -1,7 +1,7 @@
 <template>
     <the-header />
 
-    <main class="w-[100%]">
+    <main class="w-[100%] mt-[5rem]">
         <slot></slot>
     </main>
 
