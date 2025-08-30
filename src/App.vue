@@ -44,5 +44,14 @@ defineOptions({
     strong {
         font-weight: bold;
     }
+
+    input {
+        color: #485360;
+    }
+
+    button {
+        cursor: pointer;
+        border: none;
+    }
 }
 </style>

@@ -1,14 +1,15 @@
 <template>
-    <div :class="`${styleProps} relative flex items-center`">
+    <div :class="`relative flex items-center ${width}`">
         <search
-            color="#8c97a6"
-            size="20"
-            class="absolute left-2"
+            :color="iconColor"
+            :size="iconSize"
+            :class="`absolute z-10 ${iconPosition}`"
         />
 
         <input
-            class="w-[100%] h-10 px-3 ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 w-full pl-10 pr-4 py-3 border border-[#dae0e7] rounded-lg bg-background placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-[#24598f]"
+            :class="styleProps"
             type="text"
+            :placeholder="placeholder"
         />
     </div>
 </template>
@@ -21,20 +22,42 @@ defineOptions({
     name: 'SearchInput',
 })
 
-defineProps({
+const props = defineProps({
     placeholder: String,
+
     width: {
         type: String,
-        default: 'w-[100%]',
+        default: 'w-[30%]',
     },
+
     height: {
         type: String,
-        default: 'h-auto',
+        default: 'h-10',
     },
+
     customStyle: String,
+
+    iconSize: {
+        type: Number,
+        default: 16,
+    },
+
+    iconColor: {
+        type: String,
+        default: '#8c97a6',
+    },
+
+    iconPosition: {
+        type: String,
+        default: 'left-3',
+    },
 })
 
 const styleProps = computed(() => {
-    return ''
+    if (props.customStyle) {
+        return props.customStyle
+    }
+
+    return `w-full ${props.height} px-3 pl-10 pr-4 py-3 border border-[#dae0e7] rounded-lg bg-background outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#24598F] transition duration-200 ease-out`
 })
 </script>
