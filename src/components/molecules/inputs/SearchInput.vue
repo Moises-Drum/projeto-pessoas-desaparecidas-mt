@@ -7,6 +7,7 @@
         />
 
         <input
+            :id="idInput"
             :class="styleProps"
             type="text"
             :placeholder="placeholder"
@@ -18,7 +19,7 @@
 
 <script setup>
 import { Search } from 'lucide-vue-next'
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 defineOptions({
     name: 'SearchInput',
@@ -57,7 +58,9 @@ const props = defineProps({
     },
 })
 
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue', 'hash'])
+
+const idInput = ref(`input-${crypto.randomUUID()}`)
 
 const styleProps = computed(() => {
     if (props.customStyle) {
@@ -65,5 +68,9 @@ const styleProps = computed(() => {
     }
 
     return `w-full ${props.height} px-3 pl-10 pr-4 py-3 border border-[#dae0e7] rounded-lg bg-background outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#24598F] transition duration-200 ease-out`
+})
+
+onMounted(() => {
+    emits('hash', idInput.value)
 })
 </script>

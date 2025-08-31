@@ -8,7 +8,7 @@
                 : `background-color: ${props.bgColor}; opacity: 0.5`
         "
         :disabled="disabled"
-        @click="teste"
+        @click="$emit('handleClick')"
     >
         <template v-if="!loading">
             <slot name="icon"></slot>
@@ -70,6 +70,8 @@ const props = defineProps({
     customStyle: String,
 })
 
+defineEmits(['handleClick'])
+
 const styleProps = computed(() => {
     if (props.customStyle) {
         return props.customStyle
@@ -81,8 +83,4 @@ const styleProps = computed(() => {
 
     return `${props.height} ${props.width} px-3 py-3 rounded-lg outline-offset-2 transition duration-200 ease-out  will-change-transform backface-hidden hover:scale-[1.01] active:translate-y-[2px] active:scale-[0.99]`
 })
-
-const teste = () => {
-    console.log('dfdfds')
-}
 </script>

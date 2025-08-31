@@ -1,13 +1,21 @@
 <template>
     <form
+        role="search"
         class="w-[100%] flex flex-col items-center border border-[#dae0e7] rounded-lg shadow-sm p-6 space-y-2"
+        aria-labelledby="form-title"
         @submit.prevent="searchPersonas"
     >
-        <h1 class="text-[1.3rem] md:text-[1.5rem] text-center font-bold">
+        <h1
+            id="form-title"
+            class="text-[1.3rem] md:text-[1.5rem] text-center font-bold"
+        >
             Consulta de Pessoas Desaparecidas
         </h1>
 
-        <p class="text-center">
+        <p
+            id="search-description"
+            class="text-center"
+        >
             Digite informações para localizar registros de pessoas desaparecidas em Mato Grosso
         </p>
 
@@ -15,6 +23,9 @@
             v-model="searchValue"
             width="max-w-[642px] w-full"
             placeholder="Digite nome, idade, cidade ..."
+            aria-label="Campo de busca para pessoas desaparecidas"
+            aria-describedby="search-description"
+            aria-required="true"
         />
 
         <btn-default
@@ -23,6 +34,9 @@
             custom-text="!text-white"
             width="max-w-[642px] w-full"
             :disabled="!!!searchValue"
+            :aria-label="
+                searchValue ? 'Consultar pessoas desaparecidas' : 'Digite algo para consultar'
+            "
         >
             <template #icon>
                 <search

@@ -17,7 +17,13 @@ defineOptions({
     width: 100dvw;
     height: 100dvh;
 
-    font-family: 'Inter';
+    font-family:
+        'Inter',
+        -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        Roboto,
+        sans-serif;
     background-color: #f9fafb;
 
     h1,
@@ -25,7 +31,8 @@ defineOptions({
     h3,
     h4,
     h5,
-    h6 {
+    h6,
+    legend {
         color: #344256;
         font-weight: 500;
     }
@@ -43,6 +50,10 @@ defineOptions({
 
     strong {
         font-weight: bold;
+    }
+
+    label {
+        color: #344256;
     }
 
     input {

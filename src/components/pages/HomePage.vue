@@ -16,7 +16,7 @@
 import SearchForm from '../organisms/forms/SearchForm.vue'
 import BaseTemplate from '../templates/BaseTemplate.vue'
 import PeapleGrid from '@/components/organisms/main/PeapleGrid.vue'
-import PeapleFilter from '@/components/organisms/navigation/PeapleFilter.vue'
+import PeapleFilter from '@/components/organisms/forms/PeapleFilter.vue'
 
 defineOptions({
     name: 'HomePage',
