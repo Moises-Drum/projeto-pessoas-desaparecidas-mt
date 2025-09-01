@@ -82,6 +82,4 @@ const idInput = ref(`input-${crypto.randomUUID()}`)
 onMounted(() => {
     emits('hash', idInput.value)
 })
-
-const teste = value => console.log(value)
 </script>
