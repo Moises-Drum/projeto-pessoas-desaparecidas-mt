@@ -1,7 +1,7 @@
 <template>
     <form
         role="search"
-        class="w-[100%] flex flex-col items-center border border-[#dae0e7] rounded-lg shadow-sm p-6 space-y-2"
+        class="w-[100%] flex flex-col items-center border border-[#dae0e7] rounded-lg shadow-sm p-6 space-y-2 bg-white"
         aria-labelledby="form-title"
         @submit.prevent="searchPersonas"
     >
@@ -49,8 +49,8 @@
 </template>
 
 <script setup>
-import BtnDefault from '@/components/molecules/buttons/btnDefault.vue'
-import SearchInput from '@/components/molecules/inputs/SearchInput.vue'
+import BtnDefault from '@/components/atoms/buttons/btnDefault.vue'
+import SearchInput from '@/components/atoms/inputs/SearchInput.vue'
 import { Search } from 'lucide-vue-next'
 import { ref } from 'vue'
 
