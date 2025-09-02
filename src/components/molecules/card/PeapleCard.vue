@@ -5,8 +5,10 @@
         <header class="relative w-full h-[11rem]">
             <img
                 :src="urlImg"
-                class="w-full h-full object-cover rounded-lg shadow"
-                alt="Foto"
+                class="w-full h-full object-fill rounded-lg shadow"
+                :alt="`Foto de ${name}`"
+                loading="lazy"
+                decoding="async"
             />
 
             <badge-default
@@ -20,7 +22,7 @@
         </header>
 
         <div class="w-full space-y-2">
-            <h3>{{ name }}</h3>
+            <h3 class="text-center">{{ name }}</h3>
 
             <div class="space-y-1">
                 <div class="flex space-x-2 items-center">
@@ -50,7 +52,7 @@
                         aria-hidden="true"
                     />
 
-                    <span class="text-[0.9rem]">Desapareceu em {{ dateMissing }}</span>
+                    <span class="text-[0.9rem]">Desapareceu em {{ formatDate(dateMissing) }}</span>
                 </div>
             </div>
         </div>
@@ -69,6 +71,7 @@
 import BtnDefault from '@/components/atoms/buttons/btnDefault.vue'
 import { Calendar, MapPin, LucideClock7 } from 'lucide-vue-next'
 import BadgeDefault from '@/components/atoms/ui/BadgeDefault.vue'
+import { formatDate } from '@/utils/formatters.js'
 
 defineOptions({
     name: 'PeapleCard',
