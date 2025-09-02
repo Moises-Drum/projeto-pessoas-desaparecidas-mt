@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex flex-col items-center justify-center w-full p-3 space-y-4 border border-[#24598f20] bg-[#f9fafb] rounded-lg shadow"
+        class="flex flex-col items-center justify-center w-full p-3 space-y-4 border border-[#24598f20] bg-[#f9fafb] rounded-lg shadow hover:shadow-lg"
     >
         <header class="relative w-full h-[11rem]">
             <img
@@ -12,9 +12,7 @@
             />
 
             <badge-default
-                text="Desaparecido"
-                bgColor="#ee5b2b"
-                color="white"
+                v-bind="badgeIsFound"
                 size="0.8rem"
                 right="5px"
                 top="8px"
@@ -72,15 +70,16 @@ import BtnDefault from '@/components/atoms/buttons/btnDefault.vue'
 import { Calendar, MapPin, LucideClock7 } from 'lucide-vue-next'
 import BadgeDefault from '@/components/atoms/ui/BadgeDefault.vue'
 import { formatDate } from '@/utils/formatters.js'
+import { computed } from 'vue'
 
 defineOptions({
     name: 'PeapleCard',
 })
 
-defineProps({
+const props = defineProps({
     urlImg: String,
 
-    isMissing: {
+    isFound: {
         type: Boolean,
         default: false,
     },
@@ -101,9 +100,24 @@ defineProps({
     },
 
     dateMissing: {
-        type: Date,
+        type: String,
         required: true,
     },
+})
+
+const badgeIsFound = computed(() => {
+    if (props.isFound) {
+        return {
+            text: 'Localizado',
+            bgColor: '#22c35d',
+            color: 'white',
+        }
+    }
+    return {
+        text: 'Desaparecido',
+        bgColor: '#ee5b2b',
+        color: 'white',
+    }
 })
 </script>
 

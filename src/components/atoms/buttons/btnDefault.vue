@@ -1,7 +1,7 @@
 <template>
     <button
         :type="type"
-        :class="`relative flex items-center justify-center space-x-4 ${styleProps}`"
+        :class="`relative flex items-center justify-center ${styleProps}`"
         :style="
             !disabled
                 ? `background-color: ${props.bgColor}`
@@ -14,6 +14,8 @@
             <slot name="icon"></slot>
 
             <span :class="`${customText}`">{{ text }}</span>
+
+            <slot name="icon-right"></slot>
         </template>
 
         <loader-circle
@@ -47,6 +49,11 @@ const props = defineProps({
         default: 'w-[30%]',
     },
 
+    spaceX: {
+        type: String,
+        default: 'space-x-4',
+    },
+
     height: {
         type: String,
         default: 'h-10',
@@ -78,9 +85,9 @@ const styleProps = computed(() => {
     }
 
     if (props.disabled) {
-        return `${props.height} ${props.width} px-3 py-3 rounded-lg outline-offset-2 !cursor-default`
+        return `${props.height} ${props.width} ${props.spaceX} px-3 py-3 rounded-lg outline-offset-2 !cursor-default`
     }
 
-    return `${props.height} ${props.width} px-3 py-3 rounded-lg outline-offset-2 transition duration-200 ease-out  will-change-transform backface-hidden hover:scale-[1.01] active:translate-y-[2px] active:scale-[0.99]`
+    return `${props.height} ${props.width} ${props.spaceX} px-3 py-3 rounded-lg outline-offset-2 transition duration-200 ease-out  will-change-transform backface-hidden hover:scale-[1.01] active:translate-y-[2px] active:scale-[0.99]`
 })
 </script>

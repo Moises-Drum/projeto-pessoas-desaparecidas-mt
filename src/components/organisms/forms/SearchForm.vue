@@ -22,7 +22,7 @@
         <search-input
             v-model="searchValue"
             width="max-w-[642px] w-full"
-            placeholder="Digite nome, idade, cidade ..."
+            placeholder="Digite o nome da pessoa"
             aria-label="Campo de busca para pessoas desaparecidas"
             aria-describedby="search-description"
             aria-required="true"
@@ -33,7 +33,6 @@
             type="submit"
             custom-text="!text-white"
             width="max-w-[642px] w-full"
-            :disabled="!!!searchValue"
             :aria-label="
                 searchValue ? 'Consultar pessoas desaparecidas' : 'Digite algo para consultar'
             "
@@ -58,9 +57,11 @@ defineOptions({
     name: 'SearchForm',
 })
 
+const emits = defineEmits(['search-value'])
+
 const searchValue = ref('')
 
 const searchPersonas = () => {
-    console.log('teste')
+    emits('search-value', searchValue.value)
 }
 </script>

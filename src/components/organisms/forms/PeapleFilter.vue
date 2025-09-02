@@ -67,20 +67,20 @@
                             />
 
                             <radio-input
-                                :model-value="status.desaparecidos"
+                                :model-value="status.desaparecido"
                                 name="status"
                                 :size="isMobile ? 18 : 16"
                                 label="Desaparecido"
-                                :checked="status.desaparecidos === selectedStatus"
+                                :checked="status.desaparecido === selectedStatus"
                                 @update:model-value="handleStatus"
                             />
 
                             <radio-input
-                                :model-value="status.localizados"
+                                :model-value="status.localizado"
                                 name="status"
                                 :size="isMobile ? 18 : 16"
                                 label="Localizado"
-                                :checked="status.localizados === selectedStatus"
+                                :checked="status.localizado === selectedStatus"
                                 @update:model-value="handleStatus"
                             />
                         </div>
@@ -100,6 +100,15 @@
                             aria-labelledby="age-legend"
                             aria-required="false"
                         >
+                            <radio-input
+                                :model-value="ageGroup.todos"
+                                name="age"
+                                :size="isMobile ? 18 : 16"
+                                label="Todos"
+                                :checked="ageGroup.todos === selectedAgeGroup"
+                                @update:model-value="handleAgeGroup"
+                            />
+
                             <radio-input
                                 :model-value="ageGroup.A"
                                 name="age"
@@ -128,6 +137,49 @@
                             />
                         </div>
                     </fieldset>
+
+                    <fieldset class="space-y-2">
+                        <legend
+                            id="sex-legend"
+                            class="text-[1rem] md:text-[0.9rem]"
+                        >
+                            Sexo
+                        </legend>
+
+                        <div
+                            class="space-y-1"
+                            role="radiogroup"
+                            aria-labelledby="sex-legend"
+                            aria-required="false"
+                        >
+                            <radio-input
+                                :model-value="sex.todos"
+                                name="sex"
+                                :size="isMobile ? 18 : 16"
+                                label="Todos"
+                                :checked="sex.todos === selectedSex"
+                                @update:model-value="handleSex"
+                            />
+
+                            <radio-input
+                                :model-value="sex.masculino"
+                                name="sex"
+                                :size="isMobile ? 18 : 16"
+                                label="Masculino"
+                                :checked="sex.masculino === selectedSex"
+                                @update:model-value="handleSex"
+                            />
+
+                            <radio-input
+                                :model-value="sex.feminino"
+                                name="sex"
+                                :size="isMobile ? 18 : 16"
+                                label="Feminino"
+                                :checked="sex.feminino === selectedSex"
+                                @update:model-value="handleSex"
+                            />
+                        </div>
+                    </fieldset>
                 </div>
 
                 <btn-default
@@ -152,19 +204,28 @@ defineOptions({
     name: 'PeapleFilter',
 })
 
+const emits = defineEmits(['selected-status', 'selected-age-group', 'selected-sex'])
+
 const status = ref({
     todos: 'todos',
-    desaparecidos: 'desaparecidos',
-    localizados: 'localizados',
+    desaparecido: 'desaparecido',
+    localizado: 'localizado',
 })
 const ageGroup = ref({
+    todos: 'todos',
     A: '0-17',
     B: '18-39',
     C: '40+',
 })
+const sex = ref({
+    todos: 'todos',
+    masculino: 'masculino',
+    feminino: 'feminino',
+})
 
 const selectedStatus = ref(status.value.todos)
-const selectedAgeGroup = ref(ageGroup.value.A)
+const selectedAgeGroup = ref(ageGroup.value.todos)
+const selectedSex = ref(sex.value.todos)
 const showDropdownMobile = ref(false)
 const windowWidth = ref(window.innerWidth)
 
@@ -189,15 +250,31 @@ onBeforeUnmount(() => {
 
 const handleStatus = status => {
     selectedStatus.value = status
+
+    emits('selected-status', status)
 }
 
 const handleAgeGroup = age => {
     selectedAgeGroup.value = age
+
+    emits('selected-age-group', age)
+}
+
+const handleSex = sex => {
+    selectedSex.value = sex
+
+    emits('selected-sex', sex)
 }
 
 const resetFilters = () => {
     selectedStatus.value = status.value.todos
+    emits('selected-status', status.value.todos)
+
     selectedAgeGroup.value = ageGroup.value.A
+    emits('selected-age-group', ageGroup.value.todos)
+
+    selectedSex.value = sex.value.todos
+    emits('selected-sex', sex.value.todos)
 }
 
 const updateWindowWidth = () => {
