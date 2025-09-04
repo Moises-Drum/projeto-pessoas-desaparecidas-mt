@@ -40,7 +40,7 @@
 
 <script setup>
 import SearchForm from '../organisms/forms/SearchForm.vue'
-import BaseTemplate from '../templates/BaseTemplate.vue'
+import BaseTemplate from '../templates/pages/BaseTemplate.vue'
 import PeapleGrid from '@/components/organisms/main/PeapleGrid.vue'
 import PeapleFilter from '@/components/organisms/forms/PeapleFilter.vue'
 import { onMounted, ref, watch } from 'vue'

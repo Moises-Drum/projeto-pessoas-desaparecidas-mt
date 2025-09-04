@@ -6,7 +6,7 @@
             <h2 class="text-[1.25rem]">{{ title }}</h2>
         </div>
 
-        <div class="w-full p-4 grid grid-cols-1 sm:grid-cols-2 gap-5 bg-[#f9fafb] rounded-lg">
+        <div class="w-full p-6 grid grid-cols-1 lg:grid-cols-2 gap-5 bg-[#f9fafb] rounded-lg">
             <template
                 v-for="(data, i) in dataCard"
                 :key="i"
@@ -14,7 +14,7 @@
                 <div
                     :class="
                         i === dataCard.length - 1
-                            ? 'flex flex-col space-y-0.5 sm:col-span-2 '
+                            ? 'flex flex-col space-y-0.5 lg:col-span-2 '
                             : 'flex flex-col space-y-0.5 '
                     "
                 >

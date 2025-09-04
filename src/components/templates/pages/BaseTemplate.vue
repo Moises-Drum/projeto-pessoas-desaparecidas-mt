@@ -14,8 +14,8 @@
 </template>
 
 <script setup>
-import TheFooter from '../organisms/footer/TheFooter.vue'
-import TheHeader from '../organisms/header/TheHeader.vue'
+import TheFooter from '../../organisms/footer/TheFooter.vue'
+import TheHeader from '../../organisms/header/TheHeader.vue'
 
 defineOptions({
     name: 'BaseTemplate',

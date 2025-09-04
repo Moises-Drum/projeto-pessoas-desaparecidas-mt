@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import BaseTemplate from '@/components/templates/BaseTemplate.vue'
+import BaseTemplate from '@/components/templates/pages/BaseTemplate.vue'
 import { usePersonDataStore } from '@/pinia/usePersonDataStore.js'
 import BreadcrumbComponent from '@/components/organisms/navigation/BreadcrumbComponent.vue'
 import { ref } from 'vue'

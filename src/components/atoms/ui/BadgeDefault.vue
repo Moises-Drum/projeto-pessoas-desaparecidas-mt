@@ -1,10 +1,15 @@
 <template>
-    <span
-        class="absolute z-10 px-2 py-1 rounded-full font-semibold shadow-lg"
+    <div
+        class="z-10 flex justify-center items-center px-3 py-1 rounded-full shadow-lg"
         :style="customStyles"
     >
-        {{ text.toUpperCase() }}
-    </span>
+        <span
+            :class="`font-semibold`"
+            :style="`color: ${color} !important`"
+        >
+            {{ text.toUpperCase() }}
+        </span>
+    </div>
 </template>
 
 <script setup>
@@ -25,7 +30,10 @@ const props = defineProps({
         default: '1rem',
     },
 
-    color: String,
+    color: {
+        type: String,
+        default: '#fff',
+    },
 
     bgColor: { type: String, default: 'bg-white' },
 
@@ -36,10 +44,15 @@ const props = defineProps({
     top: String,
 
     bottom: String,
+
+    position: {
+        type: String,
+        default: 'absolute',
+    },
 })
 
 const customStyles = computed(() => ({
-    color: props.color,
+    position: props.position,
     fontSize: `${props.size} !important`,
     backgroundColor: props.bgColor,
     left: props.left,

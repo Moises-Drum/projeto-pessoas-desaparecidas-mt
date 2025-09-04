@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-center w-full space-y-4">
+    <div class="flex flex-col items-center w-full md:mt-16 space-y-4">
         <div class="relative w-full h-auto">
             <img
                 :src="urlImage"
@@ -23,6 +23,7 @@
             custom-text="!text-white font-semibold"
             :size="btnTextSize"
             width="w-full"
+            @handle-click="handleClick"
         >
             <template #icon>
                 <triangle-alert
@@ -86,6 +87,7 @@ const props = defineProps({
         default: false,
     },
 })
+const emits = defineEmits(['handle-click'])
 
 const btnTextSize = ref(14)
 
@@ -103,4 +105,8 @@ const badgeIsFound = computed(() => {
         color: 'white',
     }
 })
+
+const handleClick = () => {
+    emits('handle-click')
+}
 </script>
