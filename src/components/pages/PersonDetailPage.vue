@@ -31,7 +31,7 @@ const personDataStore = usePersonDataStore()
 
 const broadcrumbItems = ref([{ label: 'Consultar', to: '/' }, { label: 'Pessoa' }])
 
-const showId = () => {
-    return personDataStore.id ?? 'N/A'
-}
+// const showId = () => {
+//     return personDataStore.id ?? 'N/A'
+// }
 </script>
