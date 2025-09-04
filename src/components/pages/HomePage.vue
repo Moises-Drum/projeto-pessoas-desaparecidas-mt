@@ -104,7 +104,7 @@ const getPeaples = async () => {
             numberOfElements: response.data.numberOfElements,
         }
     } catch (error) {
-        console.log(error)
+        console.error(error)
 
         pageLoading.value = false
     } finally {

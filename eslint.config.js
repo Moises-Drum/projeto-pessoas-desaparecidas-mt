@@ -22,10 +22,14 @@ export default [
                 __dirname: 'readonly',
                 __filename: 'readonly',
                 crypto: 'readonly',
+                URL: 'readonly',
             },
         },
 
         rules: {
+            eqeqeq: 'warn',
+            curly: 'warn',
+
             'vue/multi-word-component-names': 'off',
             'vue/component-definition-name-casing': ['warn', 'PascalCase'],
             'vue/component-name-in-template-casing': ['warn', 'kebab-case'],
@@ -39,19 +43,24 @@ export default [
             'vue/html-indent': ['warn', 4],
             'vue/multiline-html-element-content-newline': 'warn',
             'vue/singleline-html-element-content-newline': 'off',
+            'vue/attribute-hyphenation': 'off',
+            'vue/require-default-prop': 'off',
+
             'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
             'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
             'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-            'prefer-const': 'warn',
             'no-var': 'warn',
-            eqeqeq: 'warn',
-            curly: 'warn',
             'no-duplicate-imports': 'warn',
             'no-return-await': 'warn',
+
+            'prefer-const': 'warn',
             'prettier/prettier': ['warn', { endOfLine: 'auto' }],
-            'vue/attribute-hyphenation': 'off',
-            'vue/require-default-prop': 'off',
             'arrow-parens': 'off',
+
+            'jsdoc/require-jsdoc': 'off',
+            'jsdoc/require-param': 'off',
+            'jsdoc/require-returns': 'off',
+            'jsdoc/valid-types': 'off',
         },
     },
     {

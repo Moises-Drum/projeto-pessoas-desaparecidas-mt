@@ -16,6 +16,7 @@ defineOptions({
     align-items: center;
     width: 100dvw;
     height: 100dvh;
+    overflow-x: hidden;
 
     font-family:
         'Inter',

@@ -1,6 +1,6 @@
 <template>
     <span
-        class="absolute z-10 px-2 py-1 rounded-full font-semibold"
+        class="absolute z-10 px-2 py-1 rounded-full font-semibold shadow-lg"
         :style="customStyles"
     >
         {{ text.toUpperCase() }}

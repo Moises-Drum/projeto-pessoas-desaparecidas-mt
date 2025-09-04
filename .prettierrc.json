@@ -12,5 +12,7 @@
   "endOfLine": "lf",
   "vueIndentScriptAndStyle": false,
   "htmlWhitespaceSensitivity": "ignore",
-  "singleAttributePerLine": true
+  "singleAttributePerLine": true,
+  "jsdocParser": true,
+  "jsdocPrintWidth": 100
 }

@@ -1,6 +1,6 @@
 <template>
     <header
-        class="fixed top-0 z-50 w-[100%] flex justify-center items-center bg-white shadow"
+        class="fixed top-0 z-50 w-[98%] flex justify-center items-center bg-white shadow rounded-md"
         role="banner"
     >
         <section class="max-w-[1216px] w-[100%]">

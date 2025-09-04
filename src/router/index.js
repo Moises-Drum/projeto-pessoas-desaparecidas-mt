@@ -2,9 +2,17 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
     {
-        path: '/',
-        name: 'HomePage',
+        path: '/mais-detalhes',
+        name: 'home',
         component: () => import('@/components/pages/HomePage.vue'),
+    },
+    {
+        path: '/',
+        name: 'person-detail',
+        meta: {
+            title: 'Mais Detalhes - Polícia Civil MT',
+        },
+        component: () => import('@/components/pages/PersonDetailPage.vue'),
     },
     {
         path: '/:pathMatch(.*)*',
@@ -18,9 +26,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    const title = to.meta.title || 'Início - Polícia Civil MT'
-
-    document.title = title
+    document.title = to.meta.title || 'Início - Polícia Civil MT'
 
     next()
 })

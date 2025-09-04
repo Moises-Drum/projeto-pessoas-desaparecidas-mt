@@ -1,14 +1,16 @@
 <template>
-    <the-header />
+    <div class="w-full h-full space-y-16">
+        <the-header />
 
-    <main
-        class="w-[100%] flex-1 flex justify-center mt-[5rem]"
-        role="main"
-    >
-        <slot></slot>
-    </main>
+        <main
+            class="w-[100%] flex-1 flex justify-center pt-[5rem]"
+            role="main"
+        >
+            <slot></slot>
+        </main>
 
-    <the-footer />
+        <the-footer />
+    </div>
 </template>
 
 <script setup>

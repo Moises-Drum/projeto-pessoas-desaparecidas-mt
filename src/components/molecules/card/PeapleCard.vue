@@ -60,6 +60,7 @@
                 text="Ver Detalhes"
                 custom-text="!text-white"
                 width="w-full"
+                @handle-click="handleClick"
             />
         </footer>
     </div>
@@ -105,6 +106,8 @@ const props = defineProps({
     },
 })
 
+const emits = defineEmits(['handle-click-btn-card'])
+
 const badgeIsFound = computed(() => {
     if (props.isFound) {
         return {
@@ -119,6 +122,10 @@ const badgeIsFound = computed(() => {
         color: 'white',
     }
 })
+
+const handleClick = () => {
+    emits('handle-click-btn-card')
+}
 </script>
 
 <style scoped lang="scss"></style>

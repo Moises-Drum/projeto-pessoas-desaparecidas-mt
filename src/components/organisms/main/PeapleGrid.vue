@@ -4,6 +4,7 @@
     >
         <header class="w-full flex flex-col">
             <h3 class="text-[1.13rem]">Resultados da Busca</h3>
+
             <span class="text-[0.9rem] md:text-[0.75rem]">
                 {{ totalPeaples }} pessoas encontradas
             </span>
@@ -22,6 +23,7 @@
                     :location="peaple.localMissing"
                     :date-missing="peaple.dateMissing"
                     :is-found="peaple.isFound"
+                    @handle-click-btn-card="handleClickCard(peaple.id)"
                 />
             </template>
 
@@ -51,6 +53,8 @@
 import PeapleCard from '@/components/molecules/card/PeapleCard.vue'
 import { Search } from 'lucide-vue-next'
 import PaginationComponent from '@/components/molecules/navigation/PaginationComponent.vue'
+import { useRouter } from 'vue-router'
+import { usePersonDataStore } from '@/pinia/usePersonDataStore.js'
 
 defineOptions({
     name: 'PeapleGrid',
@@ -75,7 +79,16 @@ defineProps({
 
 const emits = defineEmits(['change-page'])
 
+const router = useRouter()
+const personDataStore = usePersonDataStore()
+
 const handleChangePage = page => {
     emits('change-page', page)
+}
+
+const handleClickCard = id => {
+    router.push({ name: 'person-detail' })
+
+    personDataStore.setId(id)
 }
 </script>

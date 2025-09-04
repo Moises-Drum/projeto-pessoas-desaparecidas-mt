@@ -7,7 +7,7 @@
             text="Anterior"
             custom-text="hidden sm:block !text-white"
             width="auto"
-            space-x="space-x-0 sm:space-x-4"
+            space-x="space-x-0 sm:space-x-2"
             :disabled="props.paginationData.first"
             @handle-click="changePage(props.paginationData.pageNumber - 1)"
         >
@@ -68,7 +68,7 @@
             text="Próximo"
             custom-text="hidden sm:block !text-white"
             width="auto"
-            space-x="space-x-0 sm:space-x-4"
+            space-x="space-x-0 sm:space-x-2"
             :disabled="props.paginationData.last"
             @handle-click="changePage(props.paginationData.pageNumber + 1)"
         >
