@@ -65,5 +65,18 @@ defineOptions({
         cursor: pointer;
         border: none;
     }
+
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    ::-webkit-scrollbar {
+        max-width: 8px;
+        max-height: 8px;
+        background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #a39d9a;
+        border-radius: 10px;
+    }
 }
 </style>

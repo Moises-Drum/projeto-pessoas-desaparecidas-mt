@@ -60,7 +60,7 @@ const props = defineProps({
 
 const emits = defineEmits(['update:modelValue', 'hash'])
 
-const idInput = ref(`input-${crypto.randomUUID()}`)
+const idInput = ref(`input-search-${crypto.randomUUID()}`)
 
 const styleProps = computed(() => {
     if (props.customStyle) {

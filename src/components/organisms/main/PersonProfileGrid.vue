@@ -45,11 +45,90 @@
             </template>
         </history-section>
 
-        <form-default-modal title="Fornecer Informações">
+        <form-default-modal
+            title="Fornecer Informações"
+            :open-modal="openModal"
+            @handle-close="handleCloseModal"
+        >
             <template #subtitle>
                 Sobre:
                 <strong class="!text-[#344256] !font-semibold">Ana Maria Souza</strong>
             </template>
+
+            <fieldset-section title="Informações sobre o Avistamento">
+                <template #icon>
+                    <eye
+                        size="22"
+                        color="#24598f"
+                    />
+                </template>
+
+                <default-input
+                    type="date"
+                    label="Data do Avistamento"
+                    width="w-full"
+                    :required="true"
+                />
+
+                <default-input
+                    type="time"
+                    label="Horário Aproximado"
+                    width="w-full"
+                    :required="true"
+                />
+
+                <default-input
+                    label="Local do Avistamento"
+                    placeholder="Endereço ou ponto de referência"
+                    width="w-full"
+                    class="md:col-span-2"
+                    :required="true"
+                />
+
+                <default-input
+                    type="textarea"
+                    label="Local do Avistamento"
+                    placeholder="Descreva com detalhes o que você viu, as circunstâncias, roupas da pessoa, comportamento, acompanhantes, etc."
+                    width="w-full"
+                    height="h-auto"
+                    class="md:col-span-2"
+                    :required="true"
+                />
+
+                <info-card class="md:col-span-2">
+                    <div class="flex items-center space-x-2">
+                        <circle-alert
+                            size="20"
+                            color="#24598f"
+                        />
+
+                        <h3>Informações importantes</h3>
+                    </div>
+
+                    <ul class="px-7">
+                        <li>
+                            <span class="!text-[#485360] text-[0.9rem]">
+                                • Todas as informações serão tratadas com sigilo e confidencialidade
+                            </span>
+                        </li>
+                        <li>
+                            <span class="!text-[#485360] text-[0.9rem]">
+                                • Fornecer informações falsas pode configurar crime
+                            </span>
+                        </li>
+                        <li>
+                            <span class="!text-[#485360] text-[0.8rem]">
+                                • Em caso de emergência, ligue imediatamente para 190
+                            </span>
+                        </li>
+                        <li>
+                            <span class="!text-[#485360] text-[0.9rem]">
+                                • Você pode ser contatado para esclarecimentos adicionais
+                            </span>
+                        </li>
+                    </ul>
+                </info-card>
+            </fieldset-section>
         </form-default-modal>
     </section>
 </template>
@@ -57,9 +136,13 @@
 <script setup>
 import PhotoSection from '@/components/molecules/section/PhotoSection.vue'
 import InfoSection from '@/components/molecules/section/InfoSection.vue'
-import { User, MapPin, ClipboardList } from 'lucide-vue-next'
+import { User, MapPin, ClipboardList, Eye, CircleAlert } from 'lucide-vue-next'
 import HistorySection from '@/components/molecules/section/HistorySection.vue'
 import FormDefaultModal from '@/components/modals/form/FormDefaultModal.vue'
+import DefaultInput from '@/components/atoms/inputs/DefaultInput.vue'
+import FieldsetSection from '@/components/molecules/section/FieldsetSection.vue'
+import { ref } from 'vue'
+import InfoCard from '@/components/atoms/card/InfoCard.vue'
 
 defineOptions({
     name: 'PersonProfileGrid',
@@ -90,11 +173,17 @@ const infoMisssingList = [
     },
 ]
 
+const openModal = ref(false)
+
 const handleMoreInfo = () => {
-    console.log('teste')
+    openModal.value = true
 }
 
 const handleInvestigationLog = () => {
     console.log('teste')
+}
+
+const handleCloseModal = () => {
+    openModal.value = false
 }
 </script>
