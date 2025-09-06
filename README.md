@@ -85,6 +85,35 @@ sobre o desaparecimento. Ao longo do documento, haverá informações sobre o de
 - `yarn lint` - Executa o linter
 - `yarn test` - Executa os testes
 
+### Testes (Verificação Manual)
+1. **Tela Inicial:**
+    - Verifique se os cards são exibidos corretamente
+    - Teste a paginação
+    - Teste o campo de busca
+    - Teste os filtros
+    - Teste a responsividade
+
+
+2. **Detalhamento:**
+    - Clique no botão **Ver Detalhes** presente em um card e verifique se irá encaminhar para outra pagina
+    - Confirme se o status **"Desaparecida"/"Localizada"** está aparecendo corretamente
+    - Verifique se as **"informações pessoais" e "informações do desaparecimento"**, estão aparecendo corretamente
+
+
+3. **Envio de Informações:**
+    - Verifique se o botão **"FORNECER INFORMAÇÕES"** está abrindo o formulário
+    - Verifique se todos os dados estão sendo inseridos corretamente
+    - Teste o upload e exclusão das fotos
+    - Verifique a obrigatoriedade dos dados ao clicar em **"Enviar informações"** (deve reclamar se deixar passar 1 campo sem preencher)
+    - Ao enviar, deve ser apresentado uma modal de sucesso e os dados devem aparecer em **"Status e Atualizações"**
+
+
+4. **Log**
+    - O campo de log chama-se **"Status e Atualizações"**. Verifique se a ultima informação adicionada está aparecendo
+    - Clique na seção e verifique se aparecerá um historico mostrando todas as ocorrências informadas
+    - Teste o download dos arquivos
+
+
 ## Configuração da API
 
 O projeto consome APIs fornecidas pela empresa. Caso seja necessário alterar a URL base, ela estará localizada em 
