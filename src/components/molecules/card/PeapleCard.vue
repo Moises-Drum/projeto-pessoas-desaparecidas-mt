@@ -4,11 +4,12 @@
     >
         <header class="relative w-full h-[11rem]">
             <img
-                :src="urlImg"
+                :src="urlPhoto"
                 class="w-full h-full object-fill rounded-lg shadow"
                 :alt="`Foto de ${name}`"
                 loading="lazy"
                 decoding="async"
+                @error="urlPhotoError"
             />
 
             <badge-default
@@ -71,7 +72,7 @@ import BtnDefault from '@/components/atoms/buttons/btnDefault.vue'
 import { Calendar, MapPin, LucideClock7 } from 'lucide-vue-next'
 import BadgeDefault from '@/components/atoms/ui/BadgeDefault.vue'
 import { formatDate } from '@/utils/formatters.js'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 defineOptions({
     name: 'PeapleCard',
@@ -108,6 +109,11 @@ const props = defineProps({
 
 const emits = defineEmits(['handle-click-btn-card'])
 
+const urlPhoto = ref(
+    props?.urlImg ??
+        'https://www.reabilitybauru.com.br/wp-content/uploads/2017/01/perfil-300x300.png'
+)
+
 const badgeIsFound = computed(() => {
     if (props.isFound) {
         return {
@@ -125,6 +131,13 @@ const badgeIsFound = computed(() => {
 
 const handleClick = () => {
     emits('handle-click-btn-card')
+
+    console.log(urlPhoto.value)
+}
+
+const urlPhotoError = () => {
+    urlPhoto.value =
+        'https://www.reabilitybauru.com.br/wp-content/uploads/2017/01/perfil-300x300.png'
 }
 </script>
 

@@ -17,7 +17,7 @@
                 <peaple-card
                     v-for="peaple in peapleList"
                     :key="peaple.id"
-                    :url-img="peaple.urlPhoto"
+                    :url-img="peaple?.urlPhoto"
                     :name="peaple.name"
                     :age="peaple.age"
                     :location="peaple.localMissing"
