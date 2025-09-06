@@ -2,12 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
     {
-        path: '/mais-detalhes',
+        path: '/',
         name: 'home',
         component: () => import('@/components/pages/HomePage.vue'),
     },
     {
-        path: '/',
+        path: '/mais-detalhes',
         name: 'person-detail',
         meta: {
             title: 'Mais Detalhes - Polícia Civil MT',

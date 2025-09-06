@@ -22,7 +22,10 @@
                         {{ data.title }}
                     </strong>
 
-                    <span class="!text-[#344256]">{{ data.content }}</span>
+                    <span
+                        class="!text-[#344256]"
+                        v-text="data.captalize !== false ? capitalize(data.content) : data.content"
+                    ></span>
                 </div>
             </template>
         </div>
@@ -46,10 +49,12 @@
  * const list = [
  *   { title: 'Nome', content: 'Pelé Frances Asiatico' },
  *   { title: 'Idade', content: '23 anos' },
- *   { title: 'Sexo', content: 'Masculino' },
+ *   { title: 'Sexo', content: 'Masculino', captalize: false },
  *
  * ]
  */
+
+import { capitalize } from '@/utils/formatters.js'
 
 defineOptions({
     name: 'InfoSection',
@@ -65,30 +70,26 @@ defineProps({
         type: Array,
         required: true,
         validator: function (value) {
-            if (value.length === 0) {
-                console.error('InfoSection (dataCard): Array não pode estar vazio.')
-
-                return false
-            }
-
-            const invalidItem = value.find(item => {
+            return value.every(item => {
                 if (
-                    !item.title &&
-                    item.title.length === 0 &&
-                    !item.content &&
+                    !item.title ||
+                    item.title.length === 0 ||
+                    !item.content ||
                     item.content.length === 0
                 ) {
                     console.error(
                         'InfoSection (dataCard): Todos os items devem ter title e content preenchidos.',
-                        invalidItem
+                        item
                     )
-
                     return false
                 }
+                return true
             })
 
             return true
         },
     },
 })
+
+const teste = value => console.log(value)
 </script>

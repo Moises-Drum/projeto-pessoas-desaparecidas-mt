@@ -20,15 +20,6 @@
                         top="8px"
                     />
                 </div>
-
-                <div class="flex flex-col">
-                    <span class="!text-[#344256]">
-                        <strong>Caso ativo</strong>
-                        - Boletim de Ocorrência nº 2023.11.01.2341
-                    </span>
-
-                    <span class="text-[0.9rem]">Última atualização: 04/09/2025, 08:30:26</span>
-                </div>
             </div>
 
             <div class="flex flex-col">
@@ -37,12 +28,11 @@
                 <div class="flex items-center">
                     <dot
                         :size="50"
-                        color="#24598f"
+                        color="#3498db"
                     />
 
                     <span class="!text-[#344256]">
-                        <strong>01/11/2023</strong>
-                        - Boletim de Ocorrência registrado
+                        {{ ellipsis(ocurrencesData[0].informacao) }}
                     </span>
                 </div>
             </div>
@@ -50,10 +40,11 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import BadgeDefault from '@/components/atoms/ui/BadgeDefault.vue'
 import { computed } from 'vue'
 import { Dot } from 'lucide-vue-next'
+import { ellipsis } from '@/utils/formatters.js'
 
 defineOptions({
     name: 'HistorySection',
@@ -68,6 +59,11 @@ const props = defineProps({
     isFound: {
         type: Boolean,
         default: false,
+    },
+
+    ocurrencesData: {
+        type: Array,
+        required: true,
     },
 })
 

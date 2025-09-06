@@ -3,8 +3,8 @@
         <div class="relative w-full h-auto">
             <img
                 :src="urlImage"
-                class="w-full max-h-[400px] h-auto object-fill rounded-lg"
-                alt="Foto de"
+                class="w-full max-h-[400px] min-h-[15rem] h-auto object-fill rounded-lg"
+                :alt="`Foto de ${personName}`"
                 loading="lazy"
                 decoding="async"
             />
@@ -86,6 +86,7 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    personName: String,
 })
 const emits = defineEmits(['handle-click'])
 

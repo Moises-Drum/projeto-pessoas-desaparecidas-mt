@@ -46,6 +46,7 @@ import PeapleFilter from '@/components/organisms/forms/PeapleFilter.vue'
 import { onMounted, ref, watch } from 'vue'
 import { pessoaResourceService } from '@/services/pessoaResourceService.js'
 import { LoaderCircle } from 'lucide-vue-next'
+import { usePersonDataStore } from '@/pinia/usePersonDataStore.js'
 
 defineOptions({
     name: 'HomePage',
@@ -62,6 +63,10 @@ const filterSex = ref(null)
 const searchValue = ref(null)
 
 onMounted(async () => {
+    const personDataStore = usePersonDataStore()
+
+    personDataStore.clearId()
+
     await getPeaples()
 })
 

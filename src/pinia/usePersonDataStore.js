@@ -1,12 +1,22 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-export const usePersonDataStore = defineStore('personData', () => {
-    const id = ref(null)
+export const usePersonDataStore = defineStore(
+    'personData',
+    () => {
+        const id = ref(null)
 
-    const setId = newId => {
-        id.value = newId
-    }
+        const setId = newId => {
+            id.value = newId
+        }
 
-    return { id, setId }
-})
+        const clearId = () => {
+            id.value = null
+
+            localStorage.clear()
+        }
+
+        return { id, setId, clearId }
+    },
+    { persist: true }
+)

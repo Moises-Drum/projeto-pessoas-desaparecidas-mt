@@ -39,6 +39,7 @@
                         :text="btnTextSend"
                         width="w-full"
                         custom-text="!text-white font-semibold"
+                        :loading="sendLoading"
                     />
                 </div>
             </footer>
@@ -66,6 +67,10 @@ defineProps({
         default: 'Cancelar',
     },
     openModal: {
+        type: Boolean,
+        default: false,
+    },
+    sendLoading: {
         type: Boolean,
         default: false,
     },

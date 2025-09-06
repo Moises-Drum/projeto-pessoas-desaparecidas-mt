@@ -13,17 +13,14 @@ export default [
         languageOptions: {
             ecmaVersion: 'latest',
             sourceType: 'module',
-            globals: {
-                console: 'readonly',
-                window: 'readonly',
-                document: 'readonly',
-                process: 'readonly',
-                Buffer: 'readonly',
-                __dirname: 'readonly',
-                __filename: 'readonly',
-                crypto: 'readonly',
-                URL: 'readonly',
+            env: {
+                browser: true,
+                node: true,
+                es2022: true,
+                worker: true,
+                serviceworker: true,
             },
+            globals: {},
         },
 
         rules: {

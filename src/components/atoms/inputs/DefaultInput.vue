@@ -44,7 +44,6 @@
         <textarea
             v-if="type === 'textarea'"
             :id="idInput"
-            :type="type"
             :class="styleProps"
             :required="required"
             :placeholder="placeholder"
@@ -53,6 +52,17 @@
             spellcheck="true"
             @input="$emit('update:modelValue', $event.target.value)"
         ></textarea>
+
+        <input
+            v-if="type === 'file'"
+            :id="idInput"
+            :type="type"
+            :class="styleProps"
+            :required="required"
+            :placeholder="placeholder"
+            :value="modelValue"
+            @input="$emit('update:modelValue', $event.target.value)"
+        />
     </div>
 </template>
 
@@ -72,7 +82,7 @@ const props = defineProps({
                 return true
             }
 
-            const types = ['text', 'date', 'time', 'textarea', 'image']
+            const types = ['text', 'date', 'time', 'textarea', 'file']
 
             if (!types.includes(value)) {
                 console.error('DefaultInput (type): Informe um tipo válido.')

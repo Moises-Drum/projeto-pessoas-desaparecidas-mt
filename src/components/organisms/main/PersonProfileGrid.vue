@@ -4,7 +4,12 @@
     >
         <photo-section
             class="md:row-span-3"
-            url-image="https://img.freepik.com/fotos-gratis/pessoa-de-origem-indiana-se-divertindo_23-2150285283.jpg?semt=ais_incoming&w=740&q=80"
+            :url-image="
+                personData?.urlFoto ??
+                'https://www.reabilitybauru.com.br/wp-content/uploads/2017/01/perfil-300x300.png'
+            "
+            :is-found="isFound"
+            :person-name="personData?.nome ?? ''"
             @handle-click="handleMoreInfo"
         />
 
@@ -34,7 +39,8 @@
 
         <history-section
             title="Status e Atualizações"
-            :is-found="false"
+            :is-found="isFound"
+            :ocurrences-data="ocurrencesData"
             @handle-click="handleInvestigationLog"
         >
             <template #icon>
@@ -45,10 +51,13 @@
             </template>
         </history-section>
 
+        <!--MODALS-->
         <form-default-modal
             title="Fornecer Informações"
             :open-modal="openModal"
+            :send-loading="sendLoading"
             @handle-close="handleCloseModal"
+            @handle-submit="handleSubmit"
         >
             <template #subtitle>
                 Sobre:
@@ -64,33 +73,47 @@
                 </template>
 
                 <default-input
+                    v-model="infoData.data"
                     type="date"
                     label="Data do Avistamento"
-                    width="w-full"
-                    :required="true"
-                />
-
-                <default-input
-                    type="time"
-                    label="Horário Aproximado"
-                    width="w-full"
-                    :required="true"
-                />
-
-                <default-input
-                    label="Local do Avistamento"
-                    placeholder="Endereço ou ponto de referência"
                     width="w-full"
                     class="md:col-span-2"
                     :required="true"
                 />
 
                 <default-input
+                    v-model="infoData.informacao"
                     type="textarea"
-                    label="Local do Avistamento"
+                    label="Descrição Detalhada da Informação"
                     placeholder="Descreva com detalhes o que você viu, as circunstâncias, roupas da pessoa, comportamento, acompanhantes, etc."
                     width="w-full"
                     height="h-auto"
+                    class="md:col-span-2"
+                    :required="true"
+                />
+
+                <file-input-section
+                    label="Fotos ou Documentos"
+                    :mimes="['.jpg', '.jpeg', '.png']"
+                    :file-size="100"
+                    class="md:col-span-2"
+                    :required="true"
+                    @file-list-selected="handleFiles"
+                    @handle-remove-file="handleRemoveFile"
+                >
+                    <template #icon>
+                        <camera
+                            size="22"
+                            color="#24598f"
+                        />
+                    </template>
+                </file-input-section>
+
+                <default-input
+                    v-model="infoData.descricao"
+                    label="Descrição dos Anexos"
+                    placeholder="Example : Foto João da Silva"
+                    width="w-full"
                     class="md:col-span-2"
                     :required="true"
                 />
@@ -117,7 +140,7 @@
                             </span>
                         </li>
                         <li>
-                            <span class="!text-[#485360] text-[0.8rem]">
+                            <span class="!text-[#485360] text-[0.9rem]">
                                 • Em caso de emergência, ligue imediatamente para 190
                             </span>
                         </li>
@@ -130,60 +153,328 @@
                 </info-card>
             </fieldset-section>
         </form-default-modal>
+
+        <default-modal
+            title="Historico de informações"
+            :open-modal="openLogModal"
+            @handle-close="handleCloseModal"
+        >
+            <ul
+                v-if="ocurrencesData.length > 0"
+                class="w-full flex flex-col space-y-4"
+            >
+                <li
+                    v-for="(ocurrence, i) in ocurrencesData"
+                    :key="i"
+                    class="flex flex-col"
+                >
+                    <div class="relative flex items-center">
+                        <span
+                            :class="`absolute -left-[5px] !text-[#3498db] text-[1.5rem] ${i === 0 && 'animate-ping'}`"
+                        >
+                            •
+                        </span>
+
+                        <span class="text-[0.85rem] pl-4">
+                            Avistamento: {{ formatDate(ocurrence.data) }}
+                        </span>
+                    </div>
+
+                    <div class="w-full flex flex-col pl-4 border-l-2 border-[#3498db] space-y-3">
+                        <p class="!text-[#485360]">{{ ocurrence.informacao }}</p>
+
+                        <div
+                            v-if="ocurrence?.anexos?.length > 0"
+                            class="w-full flex flex-col items-end space-y-2"
+                        >
+                            <span class="text-[0.8rem]">Arquivos anexados:</span>
+
+                            <button
+                                type="button"
+                                class="w-[20%] flex items-center space-x-2 p-1 !border-1 !border-[#3498db] group hover:bg-[#3498db] rounded-sm transition duration-300 ease-in-out"
+                                @click="downloadFiles(ocurrence?.anexos)"
+                            >
+                                <download
+                                    size="13"
+                                    class="!text-[#3498db] group-hover:!text-white"
+                                />
+
+                                <span
+                                    class="!text-[#3498db] group-hover:!text-white text-[0.75rem]"
+                                >
+                                    Baixar arquivos
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <div
+                v-else
+                class="flex justify-center items-center"
+            >
+                <span>Não há histórico de ocorrências</span>
+            </div>
+
+            <template #footer>
+                <div class="w-full flex items-center justify-center p-6 bg-[#f4f4f4]">
+                    <span class="!text-[0.8rem]">
+                        Este histórico é atualizado conforme o progresso da investigação
+                    </span>
+                </div>
+            </template>
+        </default-modal>
     </section>
 </template>
 
 <script setup>
 import PhotoSection from '@/components/molecules/section/PhotoSection.vue'
 import InfoSection from '@/components/molecules/section/InfoSection.vue'
-import { User, MapPin, ClipboardList, Eye, CircleAlert } from 'lucide-vue-next'
+import { User, MapPin, ClipboardList, Eye, CircleAlert, Camera, Download } from 'lucide-vue-next'
 import HistorySection from '@/components/molecules/section/HistorySection.vue'
 import FormDefaultModal from '@/components/modals/form/FormDefaultModal.vue'
 import DefaultInput from '@/components/atoms/inputs/DefaultInput.vue'
 import FieldsetSection from '@/components/molecules/section/FieldsetSection.vue'
-import { ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import InfoCard from '@/components/atoms/card/InfoCard.vue'
+import FileInputSection from '@/components/molecules/section/FileInputSection.vue'
+import Swal from 'sweetalert2'
+import DefaultModal from '@/components/modals/default/DefaultModal.vue'
+import { formatDate, formatTime } from '@/utils/formatters.js'
+import { ocorrenciaResourceService } from '@/services/ocorrenciaResourceService.js'
 
 defineOptions({
     name: 'PersonProfileGrid',
 })
 
-const personalDataList = [
-    { title: 'Nome Completo', content: 'Ana Maria Souza' },
-    { title: 'Idade', content: '67 anos' },
-    { title: 'Data de Nascimento', content: '10/01/1956' },
-    { title: 'Sexo', content: 'Feminino' },
-    {
-        title: 'Características Físicas',
-        content: 'Altura: 1,60m | Peso: 65kg | Cabelos grisalhos | Olhos azuis | Usa bengala',
+const props = defineProps({
+    personData: {
+        type: Object,
+        required: true,
     },
-]
 
-const infoMisssingList = [
-    { title: 'Data do Desaparecimento', content: '05/11/2023' },
-    { title: 'Horário Aproximado', content: '14h00' },
-    { title: 'Local do Desaparecimento', content: 'Centro de Várzea Grande - MT' },
-    {
-        title: 'Circunstâncias',
-        content: 'Saiu para resolver questões bancárias e não retornou.',
+    ocurrencesData: {
+        type: Array,
+        required: true,
     },
-    {
-        title: 'Vestuário',
-        content: 'Camisa social branca, calça social preta, sapato social preto',
-    },
-]
+})
+
+const emits = defineEmits(['update-data-page'])
+
+const personalDataList = ref([])
+
+const infoMisssingList = ref([])
 
 const openModal = ref(false)
+const openLogModal = ref(false)
+const infoData = ref({
+    informacao: null,
+    descricao: null,
+    data: null,
+    ocoId: null,
+    files: [],
+})
+const sendLoading = ref(false)
+
+onMounted(() => {
+    personalDataList.value = [
+        { title: 'Nome', content: props?.personData?.nome ?? 'Não informado' },
+        {
+            title: 'Idade',
+            content: `${props?.personData?.idade} anos` ?? 'Não informado',
+            captalize: false,
+        },
+        { title: 'Sexo', content: props?.personData?.sexo ?? 'Não informado' },
+    ]
+
+    infoMisssingList.value = [
+        {
+            title: 'Data do Desaparecimento',
+            content:
+                formatDate(props?.personData?.ultimaOcorrencia?.dtDesaparecimento) ??
+                'Não informado',
+        },
+        {
+            title: 'Horário Aproximado',
+            content:
+                formatTime(props?.personData?.ultimaOcorrencia?.dtDesaparecimento) ??
+                'Não informado',
+        },
+        {
+            title: 'Local do Desaparecimento',
+            content:
+                props?.personData?.ultimaOcorrencia?.localDesaparecimentoConcat ?? 'Não informado',
+        },
+        {
+            title: 'Informação',
+            content:
+                props?.personData?.ultimaOcorrencia?.ocorrenciaEntrevDesapDTO?.informacao ??
+                'Não informado',
+            captalize: false,
+        },
+        {
+            title: 'Vestimentas',
+            content:
+                props?.personData?.ultimaOcorrencia?.ocorrenciaEntrevDesapDTO
+                    ?.vestimentasDesaparecido ?? 'Não informado',
+            captalize: false,
+        },
+    ]
+})
 
 const handleMoreInfo = () => {
     openModal.value = true
 }
 
 const handleInvestigationLog = () => {
-    console.log('teste')
+    openLogModal.value = true
 }
 
 const handleCloseModal = () => {
     openModal.value = false
+    openLogModal.value = false
+
+    clearInputs()
+}
+
+const handleFiles = values => {
+    infoData.value.files.push(...values)
+}
+
+const handleRemoveFile = index => {
+    infoData.value.files.splice(index, 1)
+}
+
+const clearInputs = () => {
+    infoData.value = {
+        informacao: null,
+        descricao: null,
+        data: null,
+        ocoId: null,
+        files: [],
+    }
+}
+
+const handleSubmit = async () => {
+    sendLoading.value = true
+
+    try {
+        infoData.value.ocoId = props.personData.ultimaOcorrencia.ocoId
+
+        const binaryObj = new FormData()
+
+        if (infoData.value.files && infoData.value.files.length > 0) {
+            infoData.value.files.forEach(file => {
+                binaryObj.append('files', file)
+            })
+        }
+
+        await ocorrenciaResourceService.sendNewOcurrence(binaryObj, {
+            params: {
+                informacao: infoData.value.informacao,
+                descricao: infoData.value.descricao,
+                data: infoData.value.data,
+                ocoId: infoData.value.ocoId,
+            },
+        })
+
+        emits('update-data-page')
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Sucesso!',
+            text: 'Ocorrência registrada com sucesso!',
+            showConfirmButton: false,
+            timer: 4000,
+        }).then(() => handleCloseModal())
+    } catch (error) {
+        sendLoading.value = false
+
+        console.error(error)
+
+        await Swal.fire({
+            icon: 'error',
+            title: 'Erro ',
+            text: 'Erro ao enviar as informações.',
+            confirmButtonColor: '#24598f',
+
+            didOpen: () => {
+                const confirmBtn = Swal.getConfirmButton()
+                const actionsContainer = confirmBtn.parentElement
+
+                actionsContainer.style.width = '100%'
+                actionsContainer.style.display = 'flex'
+                actionsContainer.style.justifyContent = 'center'
+
+                confirmBtn.style.width = '90%'
+            },
+        })
+    } finally {
+        sendLoading.value = false
+    }
+}
+
+const isFound = computed(() => !!props.personData?.ultimaOcorrencia?.dataLocalizacao)
+
+const baixando = ref(null)
+
+function achiveNameForUrl(url) {
+    try {
+        const u = new URL(url)
+        const base = u.pathname.split('/').pop() || 'arquivo'
+        return decodeURIComponent(base)
+    } catch {
+        return 'arquivo'
+    }
+}
+
+async function downloadFiles(anexos) {
+    if (!Array.isArray(anexos) || anexos.length === 0) return
+
+    baixando.value = true
+
+    try {
+        await Promise.all(
+            anexos.map(async ax => {
+                const url = typeof ax === 'string' ? ax : ax.url
+                const nome =
+                    typeof ax === 'string'
+                        ? achiveNameForUrl(url)
+                        : (ax?.nome ?? achiveNameForUrl(url))
+
+                try {
+                    const resp = await fetch(url, { credentials: 'include' })
+
+                    if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
+
+                    const blob = await resp.blob()
+
+                    const a = document.createElement('a')
+                    const objURL = URL.createObjectURL(blob)
+
+                    a.href = objURL
+                    a.download = nome || 'arquivo'
+
+                    document.body.appendChild(a)
+
+                    a.click()
+                    a.remove()
+
+                    URL.revokeObjectURL(objURL)
+                } catch (e) {
+                    const a = document.createElement('a')
+
+                    a.href = url
+                    a.target = '_blank'
+                    a.rel = 'noopener'
+
+                    a.click()
+                }
+            })
+        )
+    } finally {
+        baixando.value = false
+    }
 }
 </script>
