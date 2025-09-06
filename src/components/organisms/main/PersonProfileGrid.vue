@@ -287,6 +287,7 @@ onMounted(() => {
             captalize: false,
         },
         { title: 'Sexo', content: props?.personData?.sexo ?? 'Não informado' },
+        { title: 'Obito', content: (props?.personData?.vivo ? 'Sim' : 'Não') ?? 'Não informado' },
     ]
 
     infoMisssingList.value = [
