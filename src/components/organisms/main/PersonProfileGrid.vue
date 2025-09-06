@@ -53,6 +53,7 @@
 
         <!--MODALS-->
         <form-default-modal
+            v-if="!isFound"
             title="Fornecer Informações"
             :open-modal="openModal"
             :send-loading="sendLoading"
@@ -419,10 +420,11 @@ const isFound = computed(() => !!props.personData?.ultimaOcorrencia?.dataLocaliz
 
 const baixando = ref(null)
 
-function achiveNameForUrl(url) {
+function archiveNameForUrl(url) {
     try {
-        const u = new URL(url)
-        const base = u.pathname.split('/').pop() || 'arquivo'
+        const instanceUrl = new URL(url)
+        const base = instanceUrl.pathname.split('/').pop() || 'arquivo'
+
         return decodeURIComponent(base)
     } catch {
         return 'arquivo'
@@ -436,43 +438,24 @@ async function downloadFiles(anexos) {
 
     try {
         await Promise.all(
-            anexos.map(async ax => {
-                const url = typeof ax === 'string' ? ax : ax.url
-                const nome =
-                    typeof ax === 'string'
-                        ? achiveNameForUrl(url)
-                        : (ax?.nome ?? achiveNameForUrl(url))
+            anexos.map(async url => {
+                const response = await fetch(url)
+                const blob = await response.blob()
 
-                try {
-                    const resp = await fetch(url, { credentials: 'include' })
+                const a = document.createElement('a')
 
-                    if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
+                a.href = URL.createObjectURL(blob)
+                a.download = archiveNameForUrl(url)
 
-                    const blob = await resp.blob()
+                a.click()
 
-                    const a = document.createElement('a')
-                    const objURL = URL.createObjectURL(blob)
-
-                    a.href = objURL
-                    a.download = nome || 'arquivo'
-
-                    document.body.appendChild(a)
-
-                    a.click()
-                    a.remove()
-
-                    URL.revokeObjectURL(objURL)
-                } catch (e) {
-                    const a = document.createElement('a')
-
-                    a.href = url
-                    a.target = '_blank'
-                    a.rel = 'noopener'
-
-                    a.click()
-                }
+                URL.revokeObjectURL(a.href)
             })
         )
+    } catch (error) {
+        console.error(error)
+
+        baixando.value = false
     } finally {
         baixando.value = false
     }

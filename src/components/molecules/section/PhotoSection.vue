@@ -23,6 +23,7 @@
             custom-text="!text-white font-semibold"
             :size="btnTextSize"
             width="w-full"
+            :disabled="isFound"
             @handle-click="handleClick"
         >
             <template #icon>
