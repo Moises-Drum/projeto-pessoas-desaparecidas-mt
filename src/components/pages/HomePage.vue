@@ -77,7 +77,6 @@ const getPeaples = async () => {
         const response = await pessoaResourceService.searchFilter({
             params: {
                 pagina: currentPage.value ?? 0,
-                porPagina: 9,
                 nome: searchValue.value ?? '',
                 status: filterStatus.value?.toUpperCase() ?? '',
                 sexo: filterSex.value?.toUpperCase() ?? '',
