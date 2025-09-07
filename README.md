@@ -13,7 +13,7 @@ sobre o desaparecimento. Ao longo do documento, haverá informações sobre o de
 - **Email**: moises.drumand18@gmail.com
 - **Empresa**: Desenvolve MT
 - **Posição**: Desenvolvedor Junior
-- **Prazo**: 08/09/2025
+- **Data**: 08/09/2025
 
 ## Tecnologias Utilizadas
 
