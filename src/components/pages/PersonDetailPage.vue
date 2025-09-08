@@ -87,7 +87,9 @@ const getOcurrences = async ocoId => {
             },
         })
 
-        ocurrencesData.value = [...response.data].sort((a, b) => b.id - a.id)
+        console.log(response.data)
+
+        ocurrencesData.value = [...response.data]?.sort((a, b) => b.id - a.id) || []
     } catch (error) {
         console.error(error)
     }

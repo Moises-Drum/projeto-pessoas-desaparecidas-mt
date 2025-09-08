@@ -32,7 +32,7 @@
                     />
 
                     <span class="!text-[#344256]">
-                        {{ ellipsis(ocurrencesData[0].informacao) }}
+                        {{ ellipsis(ocurrencesData[0]?.informacao) }}
                     </span>
                 </div>
             </div>
