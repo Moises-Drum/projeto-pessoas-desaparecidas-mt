@@ -1,7 +1,4 @@
-# PROJETO PRÁTICO – IMPLEMENTAÇÃO FRONT-END
-
-Este projeto está sendo desenvolvido para a **Chamada Avaliação Profissional – Requisitos Desenvolvedor Júnior**, 
-disponibilizada pelo setor de Tecnologia da **Desenvolve MT**.
+# PROJETO PRÁTICO – IMPLEMENTAÇÃO FRONT-END EM VUE JS
 
 O site desenvolvido contém informações meramente ilustrativas referentes a pessoas desaparecidas no estado de 
 Mato Grosso. Nele é possível consultar a situação da pessoa (desaparecida/localizada) e registrar informações 
